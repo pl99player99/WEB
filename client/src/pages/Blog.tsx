@@ -135,7 +135,7 @@ export default function Blog() {
             dicas diretamente na sua caixa de entrada.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/#contact">
+            <Link href="/contact">
               <Button className="btn-primary gap-2">
                 Entre em Contacto <ArrowRight className="w-4 h-4" />
               </Button>
