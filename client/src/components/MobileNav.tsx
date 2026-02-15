@@ -54,13 +54,13 @@ export default function MobileNav() {
             >
               Sobre
             </Link>
-            <a
+            <Link
               href="/#contact"
               onClick={closeMenu}
               className="block py-2 hover:text-accent transition"
             >
               Contacto
-            </a>
+            </Link>
           </nav>
         </div>
       )}

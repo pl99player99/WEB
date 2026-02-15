@@ -41,9 +41,9 @@ export default function Navigation() {
               {item.label}
             </Link>
           ))}
-          <a href="/#contact" className="hover:text-accent transition">
+          <Link href="/#contact" className="hover:text-accent transition">
             Contacto
-          </a>
+          </Link>
           <ThemeToggle />
         </div>
         <MobileNav />

@@ -22,10 +22,16 @@ function getRequiredEnv(name: string) {
   return value;
 }
 
+function getOptionalEnv(name: string) {
+  const value = process.env[name]?.trim();
+  return value ? value : undefined;
+}
+
 async function sendEmail(params: {
   serviceId: string;
   templateId: string;
   publicKey: string;
+  privateKey?: string;
   templateParams: Record<string, string>;
 }) {
   const response = await fetch("https://api.emailjs.com/api/v1.0/email/send", {
@@ -37,12 +43,21 @@ async function sendEmail(params: {
       service_id: params.serviceId,
       template_id: params.templateId,
       user_id: params.publicKey,
+      accessToken: params.privateKey,
       template_params: params.templateParams,
     }),
   });
 
   if (!response.ok) {
     const errorText = await response.text();
+    if (
+      errorText.includes("strict mode") &&
+      errorText.includes("no private key was passed")
+    ) {
+      throw new Error(
+        "EmailJS strict mode está ativo. Defina EMAILJS_PRIVATE_KEY no servidor ou desative strict mode no EmailJS."
+      );
+    }
     throw new Error(`EmailJS request failed: ${response.status} ${errorText}`);
   }
 }
@@ -68,7 +83,8 @@ async function startServer() {
       const serviceId = getRequiredEnv("EMAILJS_SERVICE_ID");
       const templateIdAdmin = getRequiredEnv("EMAILJS_TEMPLATE_ID_ADMIN");
       const publicKey = getRequiredEnv("EMAILJS_PUBLIC_KEY");
-      const templateIdClient = process.env.EMAILJS_TEMPLATE_ID_CLIENT;
+      const privateKey = getOptionalEnv("EMAILJS_PRIVATE_KEY");
+      const templateIdClient = getOptionalEnv("EMAILJS_TEMPLATE_ID_CLIENT");
 
       const templateParams = {
         from_name: body.name,
@@ -82,6 +98,7 @@ async function startServer() {
         serviceId,
         templateId: templateIdAdmin,
         publicKey,
+        privateKey,
         templateParams,
       });
 
@@ -92,6 +109,7 @@ async function startServer() {
             serviceId,
             templateId: templateIdClient,
             publicKey,
+            privateKey,
             templateParams,
           });
           confirmationSent = true;
