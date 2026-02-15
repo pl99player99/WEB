@@ -67,8 +67,8 @@ async function startServer() {
     try {
       const serviceId = getRequiredEnv("EMAILJS_SERVICE_ID");
       const templateIdAdmin = getRequiredEnv("EMAILJS_TEMPLATE_ID_ADMIN");
-      const templateIdClient = getRequiredEnv("EMAILJS_TEMPLATE_ID_CLIENT");
       const publicKey = getRequiredEnv("EMAILJS_PUBLIC_KEY");
+      const templateIdClient = process.env.EMAILJS_TEMPLATE_ID_CLIENT;
 
       const templateParams = {
         from_name: body.name,
@@ -85,19 +85,29 @@ async function startServer() {
         templateParams,
       });
 
-      await sendEmail({
-        serviceId,
-        templateId: templateIdClient,
-        publicKey,
-        templateParams,
-      });
+      let confirmationSent = false;
+      if (templateIdClient) {
+        try {
+          await sendEmail({
+            serviceId,
+            templateId: templateIdClient,
+            publicKey,
+            templateParams,
+          });
+          confirmationSent = true;
+        } catch (error) {
+          console.error("Failed to send confirmation email:", error);
+        }
+      }
 
-      res.json({ success: true });
+      res.json({ success: true, confirmationSent });
     } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : "Erro ao enviar mensagem.";
       console.error("Failed to send contact emails:", error);
       res.status(500).json({
         success: false,
-        error: "Erro ao enviar mensagem.",
+        error: errorMessage,
       });
     }
   });

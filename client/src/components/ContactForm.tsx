@@ -50,8 +50,11 @@ export default function ContactForm() {
         body: JSON.stringify(formData),
       });
 
+      const result = await response.json().catch(() => null);
+
       if (!response.ok) {
-        throw new Error("Contact request failed");
+        const apiError = result?.error || "Erro ao enviar mensagem.";
+        throw new Error(apiError);
       }
 
       toast.success(
@@ -67,7 +70,11 @@ export default function ContactForm() {
       });
     } catch (error) {
       console.error("Error sending message:", error);
-      toast.error("Erro ao enviar mensagem. Tente novamente mais tarde.");
+      const message =
+        error instanceof Error
+          ? error.message
+          : "Erro ao enviar mensagem. Tente novamente mais tarde.";
+      toast.error(message);
     } finally {
       setIsLoading(false);
     }
