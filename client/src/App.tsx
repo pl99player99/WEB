@@ -11,8 +11,8 @@ import About from "./pages/About";
 import Quote from "./pages/Quote";
 import Blog from "./pages/Blog";
 import BlogArticle from "./pages/BlogArticle";
+import Contact from "./pages/Contact";
 import WhatsAppButton from "./components/WhatsAppButton";
-
 
 function Router() {
   return (
@@ -24,6 +24,7 @@ function Router() {
       <Route path={"/quote"} component={Quote} />
       <Route path={"/blog"} component={Blog} />
       <Route path={"/blog/:id"} component={BlogArticle} />
+      <Route path={"/contact"} component={Contact} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />
@@ -39,10 +40,7 @@ function Router() {
 function App() {
   return (
     <ErrorBoundary>
-      <ThemeProvider
-        defaultTheme="dark"
-        switchable
-      >
+      <ThemeProvider defaultTheme="dark" switchable>
         <TooltipProvider>
           <Toaster />
           <Router />
