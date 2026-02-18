@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ArrowRight, Check } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Navigation from "@/components/Navigation";
 import { toast } from "sonner";
 
@@ -27,6 +27,20 @@ export default function Quote() {
   const [calculatedPrice, setCalculatedPrice] = useState(35000);
   const [submitted, setSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  const packageFromQuery = useMemo(() => {
+    const queryParams = new URLSearchParams(window.location.search);
+    return queryParams.get("package") || "";
+  }, []);
+
+  const packageNameMap: Record<string, string> = {
+    presenca: "Presença Online",
+    profissional: "Negócio Profissional",
+    vendas: "Vendas & Captação",
+    personalizado: "Personalizado",
+  };
+
+  const selectedPackageName = packageNameMap[packageFromQuery] || "Não especificado";
 
   const basePrice = {
     "1": 20000,
@@ -108,6 +122,7 @@ export default function Quote() {
           email: formData.email,
           company: formData.businessName,
           message: [
+            `Pacote de interesse: ${selectedPackageName}`,
             `Tipo de negócio: ${formData.businessType}`,
             `Páginas: ${formData.pages}`,
             `Funcionalidades: ${selectedFeatureLabels.length ? selectedFeatureLabels.join(", ") : "Nenhuma"}`,
@@ -168,6 +183,11 @@ export default function Quote() {
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             Customize seu projeto e veja o preço em tempo real
           </p>
+          {packageFromQuery && (
+            <p className="mt-4 text-sm text-accent font-semibold">
+              Pacote selecionado: {selectedPackageName}
+            </p>
+          )}
         </div>
       </section>
 

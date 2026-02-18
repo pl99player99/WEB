@@ -132,19 +132,13 @@ export default function Services() {
 
   const whatsappPhone = "+244930723070";
 
-  const getPackageAction = (pkg: (typeof packages)[number]) => {
-    if (pkg.id === "personalizado") {
-      return {
-        type: "quote" as const,
-        href: `/quote?package=${pkg.id}`,
-      };
-    }
-
+  const getWhatsAppHref = (pkg: (typeof packages)[number]) => {
     const message = `Olá! Tenho interesse no pacote "${pkg.name}" (${pkg.price} ${pkg.currency}). Gostaria de avançar.`;
-    return {
-      type: "whatsapp" as const,
-      href: `https://wa.me/${whatsappPhone.replace(/\D/g, "")}?text=${encodeURIComponent(message)}`,
-    };
+    return `https://wa.me/${whatsappPhone.replace(/\D/g, "")}?text=${encodeURIComponent(message)}`;
+  };
+
+  const getQuoteHref = (pkg: (typeof packages)[number]) => {
+    return `/quote?package=${pkg.id}`;
   };
 
   return (
@@ -241,34 +235,24 @@ export default function Services() {
                     </ul>
                   </div>
 
-                  {/* CTA Button */}
-                  {(() => {
-                    const action = getPackageAction(pkg);
+                  {/* CTA Buttons */}
+                  <div className="grid grid-cols-1 gap-3 mt-auto">
+                    <a
+                      href={getWhatsAppHref(pkg)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <Button className="btn-primary w-full gap-2">
+                        Contactar via WhatsApp <ArrowRight className="w-4 h-4" />
+                      </Button>
+                    </a>
 
-                    if (action.type === "quote") {
-                      return (
-                        <Link href={action.href}>
-                          <Button className="btn-primary w-full gap-2">
-                            Ir para Calculadora{" "}
-                            <ArrowRight className="w-4 h-4" />
-                          </Button>
-                        </Link>
-                      );
-                    }
-
-                    return (
-                      <a
-                        href={action.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <Button className="btn-primary w-full gap-2">
-                          Solicitar via WhatsApp{" "}
-                          <ArrowRight className="w-4 h-4" />
-                        </Button>
-                      </a>
-                    );
-                  })()}
+                    <Link href={getQuoteHref(pkg)}>
+                      <Button variant="outline" className="w-full gap-2">
+                        Contactar por Email <ArrowRight className="w-4 h-4" />
+                      </Button>
+                    </Link>
+                  </div>
                 </Card>
               </div>
             ))}
