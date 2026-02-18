@@ -93,6 +93,11 @@ export default function Quote() {
     setIsLoading(true);
 
     try {
+      const selectedFeatureLabels = formData.features.map((featureId) => {
+        const selectedFeature = features.find((feature) => feature.id === featureId);
+        return selectedFeature ? selectedFeature.label : featureId;
+      });
+
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: {
@@ -105,7 +110,7 @@ export default function Quote() {
           message: [
             `Tipo de negócio: ${formData.businessType}`,
             `Páginas: ${formData.pages}`,
-            `Funcionalidades: ${formData.features.length ? formData.features.join(", ") : "Nenhuma"}`,
+            `Funcionalidades: ${selectedFeatureLabels.length ? selectedFeatureLabels.join(", ") : "Nenhuma"}`,
             `Hospedagem: ${formData.hosting}`,
             `Prazo: ${formData.timeline}`,
             `Preço estimado: ${calculatedPrice.toLocaleString()} Kz`,
