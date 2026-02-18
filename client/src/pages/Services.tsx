@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Check, ArrowRight, Zap, BarChart3, ShoppingCart, Sparkles } from "lucide-react";
+import { Check, ArrowRight } from "lucide-react";
 import { useState } from "react";
+import { Link } from "wouter";
 import Navigation from "@/components/Navigation";
 
 /**
@@ -42,7 +43,6 @@ export default function Services() {
         "Domínio próprio",
       ],
       bestFor: "Prestadores de serviço, consultores, pequenas lojas",
-      color: "from-blue-500 to-cyan-500",
     },
     {
       id: "profissional",
@@ -72,7 +72,6 @@ export default function Services() {
         "Suporte mensal",
       ],
       bestFor: "Empresas em crescimento, lojas, clínicas, salões, escritórios",
-      color: "from-purple-500 to-pink-500",
     },
     {
       id: "vendas",
@@ -99,8 +98,8 @@ export default function Services() {
         "Suporte mensal",
         "Atualizações frequentes",
       ],
-      bestFor: "Negócios que anunciam, prestadores de serviços, empreendedores digitais",
-      color: "from-orange-500 to-red-500",
+      bestFor:
+        "Negócios que anunciam, prestadores de serviços, empreendedores digitais",
     },
     {
       id: "personalizado",
@@ -128,9 +127,25 @@ export default function Services() {
         "Suporte mensal",
       ],
       bestFor: "Clientes com necessidades específicas, projetos únicos",
-      color: "from-green-500 to-emerald-500",
     },
   ];
+
+  const whatsappPhone = "+244930723070";
+
+  const getPackageAction = (pkg: (typeof packages)[number]) => {
+    if (pkg.id === "personalizado") {
+      return {
+        type: "quote" as const,
+        href: `/quote?package=${pkg.id}`,
+      };
+    }
+
+    const message = `Olá! Tenho interesse no pacote "${pkg.name}" (${pkg.price} ${pkg.currency}). Gostaria de avançar.`;
+    return {
+      type: "whatsapp" as const,
+      href: `https://wa.me/${whatsappPhone.replace(/\D/g, "")}?text=${encodeURIComponent(message)}`,
+    };
+  };
 
   return (
     <div className="min-h-screen bg-background text-foreground font-body">
@@ -140,9 +155,12 @@ export default function Services() {
       {/* Header */}
       <section className="pt-32 pb-16">
         <div className="container text-center">
-          <h1 className="font-display text-5xl mb-4">Nossos Pacotes de Serviços</h1>
+          <h1 className="font-display text-5xl mb-4">
+            Nossos Pacotes de Serviços
+          </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Escolha o pacote ideal para seu negócio ou solicite uma solução personalizada
+            Escolha o pacote ideal para seu negócio ou solicite uma solução
+            personalizada
           </p>
         </div>
       </section>
@@ -151,7 +169,7 @@ export default function Services() {
       <section className="py-16">
         <div className="container">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {packages.map((pkg) => (
+            {packages.map(pkg => (
               <div
                 key={pkg.id}
                 className={`relative transition-all duration-300 ${
@@ -177,22 +195,30 @@ export default function Services() {
                   <div className="mb-6">
                     <div className="text-4xl mb-3">{pkg.icon}</div>
                     <h3 className="font-display text-2xl mb-1">{pkg.name}</h3>
-                    <p className="text-sm text-muted-foreground">{pkg.subtitle}</p>
+                    <p className="text-sm text-muted-foreground">
+                      {pkg.subtitle}
+                    </p>
                   </div>
 
                   {/* Price */}
                   <div className="mb-6 pb-6 border-b border-border">
                     <div className="flex items-baseline gap-2">
                       <span className="font-display text-3xl">{pkg.price}</span>
-                      <span className="text-muted-foreground">{pkg.currency}</span>
+                      <span className="text-muted-foreground">
+                        {pkg.currency}
+                      </span>
                     </div>
-                    <p className="text-xs text-muted-foreground mt-2">{pkg.period}</p>
+                    <p className="text-xs text-muted-foreground mt-2">
+                      {pkg.period}
+                    </p>
                   </div>
 
                   {/* Delivery Time */}
                   <div className="mb-6 p-3 bg-accent/10 rounded-lg">
                     <p className="text-sm">
-                      <span className="font-semibold text-accent">Entrega:</span>{" "}
+                      <span className="font-semibold text-accent">
+                        Entrega:
+                      </span>{" "}
                       {pkg.deliveryTime}
                     </p>
                   </div>
@@ -216,9 +242,33 @@ export default function Services() {
                   </div>
 
                   {/* CTA Button */}
-                  <Button className="btn-primary w-full gap-2">
-                    Solicitar Orçamento <ArrowRight className="w-4 h-4" />
-                  </Button>
+                  {(() => {
+                    const action = getPackageAction(pkg);
+
+                    if (action.type === "quote") {
+                      return (
+                        <Link href={action.href}>
+                          <Button className="btn-primary w-full gap-2">
+                            Ir para Calculadora{" "}
+                            <ArrowRight className="w-4 h-4" />
+                          </Button>
+                        </Link>
+                      );
+                    }
+
+                    return (
+                      <a
+                        href={action.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <Button className="btn-primary w-full gap-2">
+                          Solicitar via WhatsApp{" "}
+                          <ArrowRight className="w-4 h-4" />
+                        </Button>
+                      </a>
+                    );
+                  })()}
                 </Card>
               </div>
             ))}
@@ -229,15 +279,22 @@ export default function Services() {
       {/* Detailed Comparison */}
       <section className="py-20 bg-card/30 border-y border-border">
         <div className="container">
-          <h2 className="font-display text-4xl mb-12 text-center">Comparação Detalhada</h2>
+          <h2 className="font-display text-4xl mb-12 text-center">
+            Comparação Detalhada
+          </h2>
 
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
                 <tr className="border-b border-border">
-                  <th className="text-left py-4 px-4 font-semibold">Funcionalidade</th>
-                  {packages.map((pkg) => (
-                    <th key={pkg.id} className="text-center py-4 px-4 font-semibold">
+                  <th className="text-left py-4 px-4 font-semibold">
+                    Funcionalidade
+                  </th>
+                  {packages.map(pkg => (
+                    <th
+                      key={pkg.id}
+                      className="text-center py-4 px-4 font-semibold"
+                    >
                       {pkg.name}
                     </th>
                   ))}
@@ -245,18 +302,50 @@ export default function Services() {
               </thead>
               <tbody>
                 {[
-                  { feature: "Número de Páginas", values: ["1", "Até 5", "Até 5", "Variável"] },
-                  { feature: "WhatsApp Integrado", values: ["✓", "✓", "✓", "✓"] },
-                  { feature: "Formulário de Contacto", values: ["Básico", "✓", "✓", "Variável"] },
-                  { feature: "SEO Otimizado", values: ["Básico", "✓", "✓", "Variável"] },
-                  { feature: "Design Responsivo", values: ["✓", "✓", "✓", "✓"] },
-                  { feature: "Copywriting Estratégico", values: ["—", "—", "✓", "Variável"] },
-                  { feature: "Estrutura para Anúncios", values: ["—", "Básica", "✓", "Variável"] },
-                  { feature: "Hospedagem Gratuita", values: ["✓", "—", "—", "✓"] },
-                  { feature: "Suporte Pós-Entrega", values: ["Básico", "Básico", "Básico", "Conforme"] },
+                  {
+                    feature: "Número de Páginas",
+                    values: ["1", "Até 5", "Até 5", "Variável"],
+                  },
+                  {
+                    feature: "WhatsApp Integrado",
+                    values: ["✓", "✓", "✓", "✓"],
+                  },
+                  {
+                    feature: "Formulário de Contacto",
+                    values: ["Básico", "✓", "✓", "Variável"],
+                  },
+                  {
+                    feature: "SEO Otimizado",
+                    values: ["Básico", "✓", "✓", "Variável"],
+                  },
+                  {
+                    feature: "Design Responsivo",
+                    values: ["✓", "✓", "✓", "✓"],
+                  },
+                  {
+                    feature: "Copywriting Estratégico",
+                    values: ["—", "—", "✓", "Variável"],
+                  },
+                  {
+                    feature: "Estrutura para Anúncios",
+                    values: ["—", "Básica", "✓", "Variável"],
+                  },
+                  {
+                    feature: "Hospedagem Gratuita",
+                    values: ["✓", "—", "—", "✓"],
+                  },
+                  {
+                    feature: "Suporte Pós-Entrega",
+                    values: ["Básico", "Básico", "Básico", "Conforme"],
+                  },
                 ].map((row, idx) => (
-                  <tr key={idx} className="border-b border-border hover:bg-card/50 transition">
-                    <td className="py-4 px-4 font-semibold text-sm">{row.feature}</td>
+                  <tr
+                    key={idx}
+                    className="border-b border-border hover:bg-card/50 transition"
+                  >
+                    <td className="py-4 px-4 font-semibold text-sm">
+                      {row.feature}
+                    </td>
                     {row.values.map((value, vidx) => (
                       <td key={vidx} className="text-center py-4 px-4 text-sm">
                         {value === "✓" ? (
@@ -279,7 +368,9 @@ export default function Services() {
       {/* FAQ Section */}
       <section className="py-20">
         <div className="container max-w-3xl">
-          <h2 className="font-display text-4xl mb-12 text-center">Perguntas Frequentes</h2>
+          <h2 className="font-display text-4xl mb-12 text-center">
+            Perguntas Frequentes
+          </h2>
 
           <div className="space-y-6">
             {[
@@ -318,11 +409,14 @@ export default function Services() {
         <div className="container text-center">
           <h2 className="font-display text-4xl mb-6">Pronto para Começar?</h2>
           <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Escolha seu pacote ou solicite uma solução personalizada. Estamos prontos para transformar sua presença digital!
+            Escolha seu pacote ou solicite uma solução personalizada. Estamos
+            prontos para transformar sua presença digital!
           </p>
-          <Button className="btn-primary gap-2 text-lg px-8 py-6">
-            Solicitar Orçamento <ArrowRight className="w-5 h-5" />
-          </Button>
+          <Link href="/contact">
+            <Button className="btn-primary gap-2 text-lg px-8 py-6">
+              Falar com a Equipa <ArrowRight className="w-5 h-5" />
+            </Button>
+          </Link>
         </div>
       </section>
     </div>
