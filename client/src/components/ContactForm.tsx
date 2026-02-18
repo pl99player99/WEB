@@ -1,16 +1,6 @@
 import { useState } from "react";
-import emailjs from "@emailjs/browser";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-
-// EmailJS Configuration
-const EMAILJS_PUBLIC_KEY = "cYtz4JPwSJ9RLYxCY";
-const EMAILJS_SERVICE_ID = "service_4qtop1p";
-const EMAILJS_TEMPLATE_ID_ADMIN = "template_2apoc33"; // Email para você
-const EMAILJS_TEMPLATE_ID_CLIENT = "template_bwesbsb"; // Email de confirmação para cliente
-
-// Initialize EmailJS
-emailjs.init(EMAILJS_PUBLIC_KEY);
 
 interface FormData {
   name: string;
@@ -35,7 +25,7 @@ export default function ContactForm() {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
+    setFormData(prev => ({
       ...prev,
       [name]: value,
     }));
@@ -44,7 +34,6 @@ export default function ContactForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Validate form
     if (!formData.name || !formData.email || !formData.message) {
       toast.error("Por favor, preencha os campos obrigatórios");
       return;
@@ -53,35 +42,25 @@ export default function ContactForm() {
     setIsLoading(true);
 
     try {
-      // Send email to admin (you)
-      await emailjs.send(
-        EMAILJS_SERVICE_ID,
-        EMAILJS_TEMPLATE_ID_ADMIN,
-        {
-          from_name: formData.name,
-          from_email: formData.email,
-          phone: formData.phone || "Não fornecido",
-          company: formData.company || "Não fornecido",
-          message: formData.message,
-        }
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json().catch(() => null);
+
+      if (!response.ok) {
+        const apiError = result?.error || "Erro ao enviar mensagem.";
+        throw new Error(apiError);
+      }
+
+      toast.success(
+        "Mensagem enviada com sucesso! Entraremos em contacto em breve."
       );
 
-      // Send confirmation email to client
-      await emailjs.send(
-        EMAILJS_SERVICE_ID,
-        EMAILJS_TEMPLATE_ID_CLIENT,
-        {
-          from_name: formData.name,
-          from_email: formData.email,
-          phone: formData.phone || "Não fornecido",
-          company: formData.company || "Não fornecido",
-          message: formData.message,
-        }
-      );
-
-      toast.success("Mensagem enviada com sucesso! Entraremos em contacto em breve.");
-
-      // Reset form
       setFormData({
         name: "",
         email: "",
@@ -90,8 +69,12 @@ export default function ContactForm() {
         message: "",
       });
     } catch (error) {
-      console.error("Error sending email:", error);
-      toast.error("Erro ao enviar mensagem. Tente novamente mais tarde.");
+      console.error("Error sending message:", error);
+      const message =
+        error instanceof Error
+          ? error.message
+          : "Erro ao enviar mensagem. Tente novamente mais tarde.";
+      toast.error(message);
     } finally {
       setIsLoading(false);
     }
