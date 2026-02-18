@@ -1,4 +1,4 @@
-import { useLocation } from "wouter";
+import { useLocation, Link } from "wouter";
 import ThemeToggle from "@/components/ThemeToggle";
 import MobileNav from "@/components/MobileNav";
 
@@ -21,12 +21,15 @@ export default function Navigation() {
   return (
     <nav className="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-md border-b border-border">
       <div className="container flex justify-between items-center py-4">
-        <a href="/" className="font-display text-xl hover:text-accent transition">
+        <Link
+          href="/"
+          className="font-display text-xl hover:text-accent transition"
+        >
           DDA-Web
-        </a>
+        </Link>
         <div className="hidden md:flex gap-8 items-center">
-          {navItems.map((item) => (
-            <a
+          {navItems.map(item => (
+            <Link
               key={item.path}
               href={item.path}
               className={`transition ${
@@ -36,11 +39,11 @@ export default function Navigation() {
               }`}
             >
               {item.label}
-            </a>
+            </Link>
           ))}
-          <a href="/#contact" className="hover:text-accent transition">
+          <Link href="/contact" className="hover:text-accent transition">
             Contacto
-          </a>
+          </Link>
           <ThemeToggle />
         </div>
         <MobileNav />
