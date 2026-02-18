@@ -3,6 +3,7 @@ import { Card } from "@/components/ui/card";
 import { ArrowRight, Check } from "lucide-react";
 import { useState, useEffect } from "react";
 import Navigation from "@/components/Navigation";
+import { toast } from "sonner";
 
 /**
  * DDA-Web Quote Page
@@ -25,6 +26,7 @@ export default function Quote() {
 
   const [calculatedPrice, setCalculatedPrice] = useState(35000);
   const [submitted, setSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const basePrice = {
     "1": 20000,
@@ -80,11 +82,51 @@ export default function Quote() {
     setFormData({ ...formData, features: newFeatures });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
+
+    if (!formData.businessName || !formData.businessType || !formData.email) {
+      toast.error("Preencha os campos obrigatórios para enviar o orçamento.");
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const selectedFeatureLabels = formData.features.map((featureId) => {
+        const selectedFeature = features.find((feature) => feature.id === featureId);
+        return selectedFeature ? selectedFeature.label : featureId;
+      });
+
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.businessName,
+          email: formData.email,
+          company: formData.businessName,
+          message: [
+            `Tipo de negócio: ${formData.businessType}`,
+            `Páginas: ${formData.pages}`,
+            `Funcionalidades: ${selectedFeatureLabels.length ? selectedFeatureLabels.join(", ") : "Nenhuma"}`,
+            `Hospedagem: ${formData.hosting}`,
+            `Prazo: ${formData.timeline}`,
+            `Preço estimado: ${calculatedPrice.toLocaleString()} Kz`,
+          ].join("\n"),
+        }),
+      });
+
+      const result = await response.json().catch(() => null);
+
+      if (!response.ok) {
+        throw new Error(result?.error || "Erro ao enviar orçamento.");
+      }
+
+      toast.success("Orçamento enviado com sucesso! Entraremos em contacto em breve.");
+      setSubmitted(true);
+
       setFormData({
         businessName: "",
         businessType: "",
@@ -94,7 +136,19 @@ export default function Quote() {
         timeline: "normal",
         email: "",
       });
-    }, 3000);
+    } catch (error) {
+      console.error("Error sending quote:", error);
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "Erro ao enviar orçamento. Tente novamente mais tarde.",
+      );
+    } finally {
+      setIsLoading(false);
+      setTimeout(() => {
+        setSubmitted(false);
+      }, 3000);
+    }
   };
 
   // Recalculate price whenever form changes
@@ -137,6 +191,7 @@ export default function Quote() {
                         onChange={(e) =>
                           setFormData({ ...formData, businessName: e.target.value })
                         }
+                        required
                         className="w-full px-4 py-2 rounded-lg bg-input border border-border focus:border-accent focus:outline-none transition text-foreground"
                       />
                     </div>
@@ -147,6 +202,7 @@ export default function Quote() {
                         onChange={(e) =>
                           setFormData({ ...formData, businessType: e.target.value })
                         }
+                        required
                         className="w-full px-4 py-2 rounded-lg bg-input border border-border focus:border-accent focus:outline-none transition text-foreground"
                       >
                         <option value="">Selecione...</option>
@@ -281,9 +337,9 @@ export default function Quote() {
                   />
                 </Card>
 
-                <Button type="submit" className="btn-primary w-full gap-2 text-lg py-6">
-                  {submitted ? "Orçamento Enviado! ✓" : "Enviar Orçamento"}{" "}
-                  {!submitted && <ArrowRight className="w-5 h-5" />}
+                <Button type="submit" className="btn-primary w-full gap-2 text-lg py-6" disabled={submitted || isLoading}>
+                  {isLoading ? "Enviando..." : submitted ? "Orçamento Enviado! ✓" : "Enviar Orçamento"}{" "}
+                  {!submitted && !isLoading && <ArrowRight className="w-5 h-5" />}
                 </Button>
               </form>
             </div>
