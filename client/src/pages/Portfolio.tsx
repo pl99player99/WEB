@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ArrowRight, ExternalLink } from "lucide-react";
 import { useState } from "react";
+import { Link } from "wouter";
 import Navigation from "@/components/Navigation";
 
 /**
@@ -186,8 +187,10 @@ export default function Portfolio() {
           <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
             Cada projeto é único e customizado para as necessidades específicas do seu negócio. Vamos criar algo incrível juntos!
           </p>
-          <Button className="btn-primary gap-2 text-lg px-8 py-6">
-            Solicitar Orçamento <ArrowRight className="w-5 h-5" />
+          <Button asChild className="btn-primary gap-2 text-lg px-8 py-6">
+            <Link to="/quote">
+              Solicitar Orçamento <ArrowRight className="w-5 h-5" />
+            </Link>
           </Button>
         </div>
       </section>
