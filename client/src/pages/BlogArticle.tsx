@@ -100,6 +100,16 @@ export default function BlogArticle() {
               Partilhar
             </Button>
           </div>
+
+
+          <div className="relative h-72 md:h-96 mt-8 overflow-hidden rounded-xl border border-border">
+            <img
+              src={article.image}
+              alt={article.imageAlt}
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-background/40 to-transparent" />
+          </div>
         </div>
       </section>
 
@@ -141,8 +151,12 @@ export default function BlogArticle() {
                 >
                   <Card className="h-full cursor-pointer hover:border-accent transition-all group">
                     <div className="p-6">
-                      <div className="text-4xl mb-3">
-                        {relatedArticle.image}
+                      <div className="relative h-28 mb-3 overflow-hidden rounded-lg border border-border">
+                        <img
+                          src={relatedArticle.image}
+                          alt={relatedArticle.imageAlt}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
                       </div>
                       <h3 className="font-display text-lg mb-2 group-hover:text-accent transition">
                         {relatedArticle.title}

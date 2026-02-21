@@ -56,12 +56,16 @@ export default function Home() {
 
             {/* Right Visual */}
             <div className="hidden lg:flex justify-center items-center">
-              <div className="w-full max-w-md h-64 bg-gradient-to-br from-accent/20 to-secondary/20 rounded-lg flex items-center justify-center border border-accent/30">
-                <div className="text-center">
-                  <div className="text-6xl mb-4">🚀</div>
-                  <p className="text-accent font-semibold">
-                    Transformação Digital
-                  </p>
+              <div className="w-full max-w-xl relative rounded-2xl overflow-hidden border border-accent/30">
+                <img
+                  src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1400&q=80"
+                  alt="Equipa colaborando no desenvolvimento de um projeto digital"
+                  className="w-full h-80 object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
+                <div className="absolute bottom-6 left-6 right-6">
+                  <p className="text-accent font-semibold text-lg">Transformação Digital com Pessoas Reais</p>
+                  <p className="text-sm text-muted-foreground">Projetos pensados para resultados, não apenas aparência.</p>
                 </div>
               </div>
             </div>
@@ -95,6 +99,39 @@ export default function Home() {
               <div className="font-display text-3xl text-accent mb-2">3.2x</div>
               <p className="text-sm text-muted-foreground">ROI Médio</p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Social Proof Visual */}
+      <section className="py-16">
+        <div className="container">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              {
+                image: "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=900&q=80",
+                title: "Reuniões Estratégicas",
+                text: "Planeamento com foco em metas reais do negócio.",
+              },
+              {
+                image: "https://images.unsplash.com/photo-1552581234-26160f608093?auto=format&fit=crop&w=900&q=80",
+                title: "Design e Conversão",
+                text: "Layouts modernos pensados para vender e gerar contactos.",
+              },
+              {
+                image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=900&q=80",
+                title: "Resultados Medíveis",
+                text: "Projetos com acompanhamento de desempenho e melhoria contínua.",
+              },
+            ].map((item, idx) => (
+              <Card key={idx} className="card-modern overflow-hidden p-0">
+                <img src={item.image} alt={item.title} className="w-full h-44 object-cover" />
+                <div className="p-5">
+                  <h3 className="font-display text-xl mb-2">{item.title}</h3>
+                  <p className="text-sm text-muted-foreground">{item.text}</p>
+                </div>
+              </Card>
+            ))}
           </div>
         </div>
       </section>

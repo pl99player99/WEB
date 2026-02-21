@@ -81,8 +81,14 @@ export default function Blog() {
                       </span>
                     </div>
 
-                    {/* Icon */}
-                    <div className="text-5xl mb-4">{article.image}</div>
+                    <div className="relative h-40 mb-4 overflow-hidden rounded-lg border border-border">
+                      <img
+                        src={article.image}
+                        alt={article.imageAlt}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent" />
+                    </div>
 
                     {/* Title */}
                     <h3 className="font-display text-xl mb-3 group-hover:text-accent transition">

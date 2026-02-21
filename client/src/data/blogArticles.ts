@@ -14,6 +14,7 @@ export interface BlogArticle {
   date: string;
   readTime: number;
   image: string;
+  imageAlt: string;
 }
 
 export const blogArticles: BlogArticle[] = [
@@ -26,7 +27,8 @@ export const blogArticles: BlogArticle[] = [
     author: "DDA-Web",
     date: "2025-02-10",
     readTime: 8,
-    image: "🎨",
+    image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80",
+    imageAlt: "Designer a trabalhar num layout moderno de website",
     content: webDesignModerno2025,
   },
   {
@@ -38,7 +40,8 @@ export const blogArticles: BlogArticle[] = [
     author: "DDA-Web",
     date: "2025-02-08",
     readTime: 10,
-    image: "🔍",
+    image: "https://images.unsplash.com/photo-1432888622747-4eb9a8efeb07?auto=format&fit=crop&w=1200&q=80",
+    imageAlt: "Profissional analisando métricas de SEO em portátil",
     content: seoPequenasEmpresas,
   },
   {
@@ -50,7 +53,8 @@ export const blogArticles: BlogArticle[] = [
     author: "DDA-Web",
     date: "2025-02-05",
     readTime: 9,
-    image: "💰",
+    image: "https://images.unsplash.com/photo-1556740749-887f6717d7e4?auto=format&fit=crop&w=1200&q=80",
+    imageAlt: "Empreendedora feliz vendo crescimento das vendas online",
     content: conversaoVisitantesClientes,
   },
   {
@@ -63,7 +67,8 @@ export const blogArticles: BlogArticle[] = [
     author: "DDA-Web",
     date: "2025-02-03",
     readTime: 7,
-    image: "⚡",
+    image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=1200&q=80",
+    imageAlt: "Código e performance tools abertos em ecrã",
     content: velocidadeSiteImportancia,
   },
   {
@@ -75,7 +80,8 @@ export const blogArticles: BlogArticle[] = [
     author: "DDA-Web",
     date: "2025-02-01",
     readTime: 6,
-    image: "🤖",
+    image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=1200&q=80",
+    imageAlt: "Pessoa utilizando IA para criar experiências digitais",
     content: iaWebDesign,
   },
 ];
