@@ -16,7 +16,7 @@ import { Streamdown } from "streamdown";
 
 export default function BlogArticle() {
   const { id } = useParams<{ id: string }>();
-  const article = blogArticles.find((a) => a.id === id);
+  const article = blogArticles.find(a => a.id === id);
 
   if (!article) {
     return (
@@ -35,7 +35,7 @@ export default function BlogArticle() {
   }
 
   const relatedArticles = blogArticles
-    .filter((a) => a.category === article.category && a.id !== article.id)
+    .filter(a => a.category === article.category && a.id !== article.id)
     .slice(0, 3);
 
   const handleShare = () => {
@@ -100,6 +100,16 @@ export default function BlogArticle() {
               Partilhar
             </Button>
           </div>
+
+
+          <div className="relative h-72 md:h-96 mt-8 overflow-hidden rounded-xl border border-border">
+            <img
+              src={article.image}
+              alt={article.imageAlt}
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-background/40 to-transparent" />
+          </div>
         </div>
       </section>
 
@@ -119,7 +129,8 @@ export default function BlogArticle() {
               <div>
                 <h3 className="font-display text-lg mb-1">Sobre o Autor</h3>
                 <p className="text-muted-foreground">
-                  {article.author} - Especialistas em web design, marketing digital e tecnologia.
+                  {article.author} - Especialistas em web design, marketing
+                  digital e tecnologia.
                 </p>
               </div>
             </div>
@@ -133,11 +144,20 @@ export default function BlogArticle() {
           <div className="container">
             <h2 className="font-display text-3xl mb-8">Artigos Relacionados</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {relatedArticles.map((relatedArticle) => (
-                <Link key={relatedArticle.id} href={`/blog/${relatedArticle.id}`}>
+              {relatedArticles.map(relatedArticle => (
+                <Link
+                  key={relatedArticle.id}
+                  href={`/blog/${relatedArticle.id}`}
+                >
                   <Card className="h-full cursor-pointer hover:border-accent transition-all group">
                     <div className="p-6">
-                      <div className="text-4xl mb-3">{relatedArticle.image}</div>
+                      <div className="relative h-28 mb-3 overflow-hidden rounded-lg border border-border">
+                        <img
+                          src={relatedArticle.image}
+                          alt={relatedArticle.imageAlt}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                      </div>
                       <h3 className="font-display text-lg mb-2 group-hover:text-accent transition">
                         {relatedArticle.title}
                       </h3>
@@ -163,18 +183,15 @@ export default function BlogArticle() {
             Pronto para Transformar Seu Negócio?
           </h2>
           <p className="text-muted-foreground mb-8">
-            Deixe a DDA-Web ajudar você a criar um site que não apenas parece bem, mas que também converte visitantes em clientes.
+            Deixe a DDA-Web ajudar você a criar um site que não apenas parece
+            bem, mas que também converte visitantes em clientes.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/#contact">
-              <Button className="btn-primary">
-                Entre em Contacto
-              </Button>
+            <Link href="/contact">
+              <Button className="btn-primary">Entre em Contacto</Button>
             </Link>
             <Link href="/quote">
-              <Button variant="outline">
-                Solicitar Orçamento
-              </Button>
+              <Button variant="outline">Solicitar Orçamento</Button>
             </Link>
           </div>
         </div>
@@ -184,7 +201,9 @@ export default function BlogArticle() {
       <footer className="py-12 border-t border-border text-center text-muted-foreground text-sm">
         <div className="container">
           <p>&copy; 2025 DDA-Web. Todos os direitos reservados.</p>
-          <p className="mt-2">Transformando negócios com tecnologia e inovação.</p>
+          <p className="mt-2">
+            Transformando negócios com tecnologia e inovação.
+          </p>
         </div>
       </footer>
     </div>

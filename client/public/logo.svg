@@ -1,0 +1,5 @@
+<svg width="160" height="40" viewBox="0 0 160 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="0.5" y="0.5" width="39" height="39" rx="10" fill="#0A0A0A" stroke="#1f2937"/>
+  <path d="M12 10H21.5C28.4 10 33 14.3 33 20C33 25.7 28.4 30 21.5 30H12V10ZM20.8 26.2C25.2 26.2 27.8 23.7 27.8 20C27.8 16.3 25.2 13.8 20.8 13.8H16.9V26.2H20.8Z" fill="#3b82f6"/>
+  <text x="50" y="25" fill="#e5e7eb" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700">DDA-Web</text>
+</svg>
