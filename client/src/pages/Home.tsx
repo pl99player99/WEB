@@ -366,17 +366,19 @@ export default function Home() {
                   "https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format&fit=crop&w=1200&q=80",
               },
             ].map((project, idx) => (
-              <Card key={idx} className="card-modern overflow-hidden p-0">
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="h-40 w-full object-cover"
-                />
-                <div className="p-6">
-                  <p className="text-xs text-accent mb-2">{project.category}</p>
-                  <h3 className="font-semibold">{project.title}</h3>
-                </div>
-              </Card>
+              <Link key={idx} href="/portfolio">
+                <Card className="card-modern overflow-hidden p-0 cursor-pointer hover:border-accent transition-all">
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="h-40 w-full object-cover"
+                  />
+                  <div className="p-6">
+                    <p className="text-xs text-accent mb-2">{project.category}</p>
+                    <h3 className="font-semibold">{project.title}</h3>
+                  </div>
+                </Card>
+              </Link>
             ))}
           </div>
           <div className="text-center">
@@ -403,25 +405,24 @@ export default function Home() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             {blogArticles.slice(0, 3).map((article) => (
-              <Card
-                key={article.id}
-                className="hover:border-accent transition-all group overflow-hidden p-0"
-              >
-                <img
-                  src={article.image}
-                  alt={article.imageAlt}
-                  className="h-40 w-full object-cover"
-                />
-                <div className="p-6">
-                  <p className="text-xs text-accent mb-2">{article.category}</p>
-                  <h3 className="font-semibold mb-3 group-hover:text-accent transition">
-                    {article.title}
-                  </h3>
-                  <p className="text-sm text-muted-foreground">
-                    {article.excerpt}
-                  </p>
-                </div>
-              </Card>
+              <Link key={article.id} href={`/blog/${article.id}`}>
+                <Card className="hover:border-accent transition-all group overflow-hidden p-0 cursor-pointer">
+                  <img
+                    src={article.image}
+                    alt={article.imageAlt}
+                    className="h-40 w-full object-cover"
+                  />
+                  <div className="p-6">
+                    <p className="text-xs text-accent mb-2">{article.category}</p>
+                    <h3 className="font-semibold mb-3 group-hover:text-accent transition">
+                      {article.title}
+                    </h3>
+                    <p className="text-sm text-muted-foreground">
+                      {article.excerpt}
+                    </p>
+                  </div>
+                </Card>
+              </Link>
             ))}
           </div>
           <div className="text-center">
@@ -442,7 +443,7 @@ export default function Home() {
               Entre em Contacto Conosco
             </h2>
             <p className="text-muted-foreground">
-              Preencha o formulario abaixo e entraremos em contacto em breve.
+              Preencha o formulário abaixo e entraremos em contacto em breve.
             </p>
           </div>
           <div className="bg-background/50 border border-border rounded-lg p-8 mb-8">
