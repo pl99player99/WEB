@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Check, ArrowRight } from "lucide-react";
+import { Check, ArrowRight, Globe, BriefcaseBusiness, Rocket, SlidersHorizontal } from "lucide-react";
 import { useState } from "react";
 import { Link } from "wouter";
 import Navigation from "@/components/Navigation";
@@ -24,7 +24,7 @@ export default function Services() {
       price: "35.000",
       currency: "Kz",
       period: "pagamento único",
-      icon: "🌐",
+      icon: <Globe className="w-8 h-8" />,
       description: "Perfeito para pequenos negócios que querem estar online",
       deliveryTime: "3 a 5 dias úteis",
       features: [
@@ -51,7 +51,7 @@ export default function Services() {
       price: "70.000",
       currency: "Kz",
       period: "pagamento único",
-      icon: "💼",
+      icon: <BriefcaseBusiness className="w-8 h-8" />,
       description: "Site completo que passa credibilidade e profissionalismo",
       deliveryTime: "5 a 7 dias úteis",
       featured: true,
@@ -80,7 +80,7 @@ export default function Services() {
       price: "120.000",
       currency: "Kz",
       period: "pagamento único",
-      icon: "🚀",
+      icon: <Rocket className="w-8 h-8" />,
       description: "Landing page otimizada para conversão e captação de leads",
       deliveryTime: "7 a 10 dias úteis",
       features: [
@@ -108,7 +108,7 @@ export default function Services() {
       price: "A partir de",
       currency: "20.000 Kz",
       period: "conforme escopo",
-      icon: "✨",
+      icon: <SlidersHorizontal className="w-8 h-8" />,
       description: "Solução customizada para suas necessidades específicas",
       deliveryTime: "Conforme acordado",
       features: [
@@ -187,7 +187,7 @@ export default function Services() {
                 >
                   {/* Header */}
                   <div className="mb-6">
-                    <div className="text-4xl mb-3">{pkg.icon}</div>
+                    <div className="mb-3 text-accent">{pkg.icon}</div>
                     <h3 className="font-display text-2xl mb-1">{pkg.name}</h3>
                     <p className="text-sm text-muted-foreground">
                       {pkg.subtitle}

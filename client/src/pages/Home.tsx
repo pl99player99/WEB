@@ -1,9 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { ArrowRight, Check, Zap, Target, Users, Lightbulb } from "lucide-react";
+import { ArrowRight, Check, Zap, Target, Users, Lightbulb, Globe, BriefcaseBusiness, Rocket, SlidersHorizontal } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import ContactForm from "@/components/ContactForm";
 import { Link } from "wouter";
+import { blogArticles } from "@/data/blogArticles";
 
 /**
  * DDA-Web Home Page
@@ -151,7 +152,7 @@ export default function Home() {
             {/* Package 1 */}
             <Card className="card-modern">
               <div className="mb-4">
-                <div className="text-3xl mb-2">🌐</div>
+                <div className="mb-2 text-accent"><Globe className="w-7 h-7" /></div>
                 <h3 className="font-display text-lg">Presença Online</h3>
                 <p className="text-xs text-muted-foreground">Para começar</p>
               </div>
@@ -188,7 +189,7 @@ export default function Home() {
                 <span className="text-xs bg-accent/20 text-accent px-2 py-1 rounded">
                   Mais Popular
                 </span>
-                <div className="text-3xl mb-2 mt-2">💼</div>
+                <div className="mb-2 mt-2 text-accent"><BriefcaseBusiness className="w-7 h-7" /></div>
                 <h3 className="font-display text-lg">Profissional</h3>
                 <p className="text-xs text-muted-foreground">Empresa séria</p>
               </div>
@@ -220,7 +221,7 @@ export default function Home() {
             {/* Package 3 */}
             <Card className="card-modern">
               <div className="mb-4">
-                <div className="text-3xl mb-2">🚀</div>
+                <div className="mb-2 text-accent"><Rocket className="w-7 h-7" /></div>
                 <h3 className="font-display text-lg">Vendas & Captação</h3>
                 <p className="text-xs text-muted-foreground">Gerar clientes</p>
               </div>
@@ -254,7 +255,7 @@ export default function Home() {
             {/* Package 4 */}
             <Card className="card-modern">
               <div className="mb-4">
-                <div className="text-3xl mb-2">✨</div>
+                <div className="mb-2 text-accent"><SlidersHorizontal className="w-7 h-7" /></div>
                 <h3 className="font-display text-lg">Personalizado</h3>
                 <p className="text-xs text-muted-foreground">Sua solução</p>
               </div>
@@ -349,17 +350,28 @@ export default function Home() {
               {
                 title: "Restaurante Sabor da Terra",
                 category: "Negócio Profissional",
+                image:
+                  "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=80",
               },
               {
                 title: "Consultoria JM - Landing Page",
                 category: "Vendas & Captação",
+                image:
+                  "https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=1200&q=80",
               },
-              { title: "Salão de Beleza Estilo", category: "Presença Online" },
+              {
+                title: "Salão de Beleza Estilo",
+                category: "Presença Online",
+                image:
+                  "https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format&fit=crop&w=1200&q=80",
+              },
             ].map((project, idx) => (
-              <Card key={idx} className="card-modern overflow-hidden">
-                <div className="h-40 bg-gradient-to-br from-accent/20 to-secondary/20 flex items-center justify-center">
-                  <span className="text-4xl">📱</span>
-                </div>
+              <Card key={idx} className="card-modern overflow-hidden p-0">
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  className="h-40 w-full object-cover"
+                />
                 <div className="p-6">
                   <p className="text-xs text-accent mb-2">{project.category}</p>
                   <h3 className="font-semibold">{project.title}</h3>
@@ -390,34 +402,17 @@ export default function Home() {
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            {[
-              {
-                title: "Web Design Moderno em 2025",
-                excerpt:
-                  "Descubra as tendências mais quentes em web design para 2025.",
-                category: "Web Design",
-                icon: "🎨",
-              },
-              {
-                title: "SEO para Pequenas Empresas",
-                excerpt:
-                  "Aprenda como otimizar seu site para os motores de busca.",
-                category: "Marketing",
-                icon: "🔍",
-              },
-              {
-                title: "Inteligência Artificial no Web Design",
-                excerpt: "A IA está transformando o web design. Descubra como.",
-                category: "Tecnologia",
-                icon: "🤖",
-              },
-            ].map((article, idx) => (
+            {blogArticles.slice(0, 3).map((article) => (
               <Card
-                key={idx}
-                className="hover:border-accent transition-all group"
+                key={article.id}
+                className="hover:border-accent transition-all group overflow-hidden p-0"
               >
+                <img
+                  src={article.image}
+                  alt={article.imageAlt}
+                  className="h-40 w-full object-cover"
+                />
                 <div className="p-6">
-                  <div className="text-4xl mb-4">{article.icon}</div>
                   <p className="text-xs text-accent mb-2">{article.category}</p>
                   <h3 className="font-semibold mb-3 group-hover:text-accent transition">
                     {article.title}
