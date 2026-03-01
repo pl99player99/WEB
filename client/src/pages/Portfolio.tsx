@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ArrowRight, ExternalLink } from "lucide-react";
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import { Link } from "wouter";
 import Navigation from "@/components/Navigation";
 
 /**
@@ -13,14 +14,20 @@ import Navigation from "@/components/Navigation";
  */
 
 export default function Portfolio() {
-  const [selectedProject, setSelectedProject] = useState<number | null>(null);
+  const initialProject = useMemo(() => {
+    const value = new URLSearchParams(window.location.search).get("project");
+    const parsed = value ? Number(value) : null;
+    return Number.isInteger(parsed) ? parsed : null;
+  }, []);
+
+  const [selectedProject, setSelectedProject] = useState<number | null>(initialProject);
 
   const projects = [
     {
       id: 1,
       title: "Restaurante Sabor da Terra",
       category: "Negócio Profissional",
-      image: "https://private-us-east-1.manuscdn.com/sessionFile/GTsgJhGx8zunqtwsnDjmXb/sandbox/alC7eOmzfqdcSveQCEcWC5-img-4_1770486193000_na1fn_ZGRhLXdlYi1wb3J0Zm9saW8tcGxhY2Vob2xkZXI.png?x-oss-process=image/resize,w_1920,h_1920/format,webp/quality,q_80&Expires=1798761600&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvR1RzZ0poR3g4enVucXR3c25Eam1YYi9zYW5kYm94L2FsQzdlT216ZnFkY1N2ZVFDRWNXQzUtaW1nLTRfMTc3MDQ4NjE5MzAwMF9uYTFmbl9aR1JoTFhkbFlpMXdiM0owWm05c2FXOHRjR3hoWTJWb2IyeGtaWEkucG5nP3gtb3NzLXByb2Nlc3M9aW1hZ2UvcmVzaXplLHdfMTkyMCxoXzE5MjAvZm9ybWF0LHdlYnAvcXVhbGl0eSxxXzgwIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk4NzYxNjAwfX19XX0_&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=rkI6~nIcyah4GtLIGyxnJB1URSSBjSXKyvCx3izbvsrtBZeivXVAOlaBOI9CbIrDEhRoueZvtAEAAH4jJ6lgMb9jQyb5ia1kN-oC73nibGifkPIsWAzbiqKgmJVm612f2MesoiMMkpjHj9IgClGNi~a-FSnJFVvaw5qdyyYLYxhkRg8EowL6JTEb1MsbpZ6XPFc0JPdt3X~dxvNkzJrvuPM4cCbWW0Toyf5i25-Nx3guayjHs2jkFYeJ~KIWUDVhVwS93O10DmHe7PPHDEOVZS5yMGz5W1Wusk1Jf4grUGZLtaMq2lwtTY5zpDEx7LzWBWSTzf0E4RiRv5kXozzlog__",
+      image: "/images/project-1.png",
       description: "Site profissional para restaurante com cardápio digital e integração WhatsApp",
       challenge: "O restaurante tinha presença fraca nas redes sociais e perdia clientes por não ter um site profissional.",
       solution: "Criámos um site moderno com cardápio digital, galeria de pratos, reservas online e botão WhatsApp direto.",
@@ -38,7 +45,7 @@ export default function Portfolio() {
       id: 2,
       title: "Consultoria JM - Landing Page",
       category: "Vendas & Captação",
-      image: "https://private-us-east-1.manuscdn.com/sessionFile/GTsgJhGx8zunqtwsnDjmXb/sandbox/alC7eOmzfqdcSveQCEcWC5-img-5_1770486197000_na1fn_ZGRhLXdlYi1jdGEtdmlzdWFs.png?x-oss-process=image/resize,w_1920,h_1920/format,webp/quality,q_80&Expires=1798761600&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvR1RzZ0poR3g4enVucXR3c25Eam1YYi9zYW5kYm94L2FsQzdlT216ZnFkY1N2ZVFDRWNXQzUtaW1nLTVfMTc3MDQ4NjE5NzAwMF9uYTFmbl9aR1JoTFhkbFlpMWpkR0V0ZG1semRXRnMucG5nP3gtb3NzLXByb2Nlc3M9aW1hZ2UvcmVzaXplLHdfMTkyMCxoXzE5MjAvZm9ybWF0LHdlYnAvcXVhbGl0eSxxXzgwIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk4NzYxNjAwfX19XX0_&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=fHeIAmWDusO1Z8gMI0P2tlqk2qal~pE8f0OQ2E4DdQk4ZkvyiTQct8td3X-yLz8zsxXWMReCpX17JAzCA8iVZHhXcy6xSR6twjTUdaoP9ftMq2~ZyBQ6Ci1rc5eMLvpsgExZ0M03okq~2k68J3h33QG3aUvbuNgZD~Ak4DcvC~3gIeA-t7bAPuIeEjgzRRy2Dh~c1j0~jerH7AjJMLcKFI4jX3MS1hotSavQhkv2YdMYTk03PBNbYblAuVHBiwjVQx4U8vSGaqFo67ZfiVdW8nyTwdCasppBHBnFRTitZeTb-v~srCjYx7AxKniJ0XmQDxihYw3yNCdv~kegFvdbBw__",
+      image: "/images/project-2.png",
       description: "Landing page otimizada para captação de leads de consultoria empresarial",
       challenge: "Consultora precisava de uma página focada em conversão para seus anúncios no Facebook.",
       solution: "Desenvolvemos uma landing page com copywriting estratégico, CTA otimizado e integração com WhatsApp para captar leads.",
@@ -56,7 +63,7 @@ export default function Portfolio() {
       id: 3,
       title: "Salão de Beleza Estilo",
       category: "Presença Online",
-      image: "https://private-us-east-1.manuscdn.com/sessionFile/GTsgJhGx8zunqtwsnDjmXb/sandbox/alC7eOmzfqdcSveQCEcWC5-img-3_1770486193000_na1fn_ZGRhLXdlYi1zZXJ2aWNlcy1pbGx1c3RyYXRpb24.png?x-oss-process=image/resize,w_1920,h_1920/format,webp/quality,q_80&Expires=1798761600&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvR1RzZ0poR3g4enVucXR3c25Eam1YYi9zYW5kYm94L2FsQzdlT216ZnFkY1N2ZVFDRWNXQzUtaW1nLTNfMTc3MDQ4NjE5MzAwMF9uYTFmbl9aR1JoTFhkbFlpMXpaWEoyYVdObGN5MXBiR3gxYzNSeVlYUnBiMjQucG5nP3gtb3NzLXByb2Nlc3M9aW1hZ2UvcmVzaXplLHdfMTkyMCxoXzE5MjAvZm9ybWF0LHdlYnAvcXVhbGl0eSxxXzgwIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk4NzYxNjAwfX19XX0_&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=pPrueVirQsOW9OaA8ylJNCZaXAZhz2qAdhpSCnesz6U~4ZR30BzlpO6wcvWuWM~~ciA-MzY~xNh-dSgLGyUDlphFCldIlyO9yHmnWAeYe0EiT0Ufmz8hWKDxcpxB~q3gvlq1h9NJb2kKSNDk5kCpDmT9RHpN2r2hJOBXAEVI72YZQWa7JwDSLwbCIS9bCMkUELciZ8cnTgoGtJ4lsarnCEMG47xNG8l7O8FpXkZh7gDun7RzjZ6O0CA~3Y5-iPPTBhwPbKRl2ycKOGgzEWV0yy6Wg7tsU3ApWF4BVbrO9MV6UUNdsAps3bXC7zu6FmQcqRMMKnuW6OVbWvsfx~oQgg__",
+      image: "/images/project-3.png",
       description: "One Page simples e elegante para salão de beleza com agendamento via WhatsApp",
       challenge: "Salão pequeno precisava de presença online rápida e acessível.",
       solution: "Criámos uma página one-page limpa com galeria de serviços, preços e botão WhatsApp para agendamentos.",
@@ -82,7 +89,7 @@ export default function Portfolio() {
         <div className="container text-center">
           <h1 className="font-display text-5xl mb-4">Nosso Portfólio</h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Veja alguns dos projetos que desenvolvemos e os resultados alcançados
+            Veja exemplos de projetos que representam nosso padrão visual e os resultados que buscamos para cada cliente
           </p>
         </div>
       </section>
@@ -186,8 +193,10 @@ export default function Portfolio() {
           <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
             Cada projeto é único e customizado para as necessidades específicas do seu negócio. Vamos criar algo incrível juntos!
           </p>
-          <Button className="btn-primary gap-2 text-lg px-8 py-6">
-            Solicitar Orçamento <ArrowRight className="w-5 h-5" />
+          <Button asChild className="btn-primary gap-2 text-lg px-8 py-6">
+            <Link to="/quote">
+              Solicitar Orçamento <ArrowRight className="w-5 h-5" />
+            </Link>
           </Button>
         </div>
       </section>
