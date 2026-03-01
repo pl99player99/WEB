@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ArrowRight, ExternalLink } from "lucide-react";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Link } from "wouter";
 import Navigation from "@/components/Navigation";
 
@@ -14,14 +14,20 @@ import Navigation from "@/components/Navigation";
  */
 
 export default function Portfolio() {
-  const [selectedProject, setSelectedProject] = useState<number | null>(null);
+  const initialProject = useMemo(() => {
+    const value = new URLSearchParams(window.location.search).get("project");
+    const parsed = value ? Number(value) : null;
+    return Number.isInteger(parsed) ? parsed : null;
+  }, []);
+
+  const [selectedProject, setSelectedProject] = useState<number | null>(initialProject);
 
   const projects = [
     {
       id: 1,
       title: "Restaurante Sabor da Terra",
       category: "Negócio Profissional",
-      image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=80",
+      image: "/images/project-1.svg",
       description: "Site profissional para restaurante com cardápio digital e integração WhatsApp",
       challenge: "O restaurante tinha presença fraca nas redes sociais e perdia clientes por não ter um site profissional.",
       solution: "Criámos um site moderno com cardápio digital, galeria de pratos, reservas online e botão WhatsApp direto.",
@@ -39,7 +45,7 @@ export default function Portfolio() {
       id: 2,
       title: "Consultoria JM - Landing Page",
       category: "Vendas & Captação",
-      image: "https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=1200&q=80",
+      image: "/images/project-2.svg",
       description: "Landing page otimizada para captação de leads de consultoria empresarial",
       challenge: "Consultora precisava de uma página focada em conversão para seus anúncios no Facebook.",
       solution: "Desenvolvemos uma landing page com copywriting estratégico, CTA otimizado e integração com WhatsApp para captar leads.",
@@ -57,7 +63,7 @@ export default function Portfolio() {
       id: 3,
       title: "Salão de Beleza Estilo",
       category: "Presença Online",
-      image: "https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format&fit=crop&w=1200&q=80",
+      image: "/images/project-3.svg",
       description: "One Page simples e elegante para salão de beleza com agendamento via WhatsApp",
       challenge: "Salão pequeno precisava de presença online rápida e acessível.",
       solution: "Criámos uma página one-page limpa com galeria de serviços, preços e botão WhatsApp para agendamentos.",

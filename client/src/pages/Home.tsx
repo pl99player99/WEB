@@ -29,13 +29,12 @@ export default function Home() {
             <div className="space-y-6">
               <div className="space-y-4">
                 <h1 className="font-display text-5xl lg:text-6xl leading-tight">
-                  A Sua Empresa na Era da{" "}
-                  <span className="text-accent">Inteligência Artificial</span>
+                  Sites Profissionais para
+                  <span className="text-accent">Gerar Mais Clientes</span>
                 </h1>
                 <p className="text-lg text-muted-foreground">
                   Criamos sites profissionais, rápidos e otimizados para
-                  converter visitantes em clientes. Tecnologia de ponta para
-                  empresas que não querem ficar para trás.
+                  converter visitantes em clientes. Soluções modernas e estratégicas para empresas que querem crescer com presença digital forte.
                 </p>
               </div>
               <div className="flex flex-col sm:flex-row gap-4 pt-4">
@@ -59,7 +58,7 @@ export default function Home() {
             <div className="hidden lg:flex justify-center items-center">
               <div className="w-full max-w-xl relative rounded-2xl overflow-hidden border border-accent/30">
                 <img
-                  src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1400&q=80"
+                  src="/images/home-hero.svg"
                   alt="Equipa colaborando no desenvolvimento de um projeto digital"
                   className="w-full h-80 object-cover"
                 />
@@ -110,17 +109,17 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
               {
-                image: "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=900&q=80",
+                image: "/images/home-proof-1.svg",
                 title: "Reuniões Estratégicas",
                 text: "Planeamento com foco em metas reais do negócio.",
               },
               {
-                image: "https://images.unsplash.com/photo-1552581234-26160f608093?auto=format&fit=crop&w=900&q=80",
+                image: "/images/home-proof-2.svg",
                 title: "Design e Conversão",
                 text: "Layouts modernos pensados para vender e gerar contactos.",
               },
               {
-                image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=900&q=80",
+                image: "/images/home-proof-3.svg",
                 title: "Resultados Medíveis",
                 text: "Projetos com acompanhamento de desempenho e melhoria contínua.",
               },
@@ -348,25 +347,28 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             {[
               {
+                id: 1,
                 title: "Restaurante Sabor da Terra",
                 category: "Negócio Profissional",
                 image:
-                  "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=80",
+                  "/images/project-1.svg",
               },
               {
+                id: 2,
                 title: "Consultoria JM - Landing Page",
                 category: "Vendas & Captação",
                 image:
-                  "https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=1200&q=80",
+                  "/images/project-2.svg",
               },
               {
+                id: 3,
                 title: "Salão de Beleza Estilo",
                 category: "Presença Online",
                 image:
-                  "https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format&fit=crop&w=1200&q=80",
+                  "/images/project-3.svg",
               },
             ].map((project, idx) => (
-              <Link key={idx} href="/portfolio">
+              <Link key={idx} href={`/portfolio?project=${project.id}`}>
                 <Card className="card-modern overflow-hidden p-0 cursor-pointer hover:border-accent transition-all">
                   <img
                     src={project.image}

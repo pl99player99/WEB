@@ -104,7 +104,7 @@ export default function Blog() {
                     <div className="flex items-center gap-4 text-xs text-muted-foreground border-t border-border pt-4">
                       <div className="flex items-center gap-1">
                         <Calendar className="w-4 h-4" />
-                        {new Date(article.date).toLocaleDateString("pt-BR")}
+                        {new Date(article.date).toLocaleDateString("pt-PT")}
                       </div>
                       <div className="flex items-center gap-1">
                         <Clock className="w-4 h-4" />

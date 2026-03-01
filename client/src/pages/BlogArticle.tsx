@@ -80,7 +80,7 @@ export default function BlogArticle() {
           <div className="flex flex-wrap items-center gap-6 text-muted-foreground border-b border-border pb-6">
             <div className="flex items-center gap-2">
               <Calendar className="w-5 h-5" />
-              {new Date(article.date).toLocaleDateString("pt-BR", {
+              {new Date(article.date).toLocaleDateString("pt-PT", {
                 year: "numeric",
                 month: "long",
                 day: "numeric",

@@ -23,10 +23,9 @@ export default function Navigation() {
       <div className="container flex justify-between items-center py-4">
         <Link
           href="/"
-          className="flex items-center gap-3 hover:opacity-90 transition"
+          className="flex items-center hover:opacity-90 transition"
         >
-          <img src="/logo.svg" alt="DDA-Web" className="h-8 w-auto" />
-          <span className="font-display text-xl">DDA-Web</span>
+          <img src="/logo.svg" alt="DDA-Web" className="h-10 w-auto max-w-[240px]" />
         </Link>
         <div className="hidden md:flex gap-8 items-center">
           {navItems.map(item => (
