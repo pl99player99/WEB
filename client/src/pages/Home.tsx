@@ -29,12 +29,14 @@ export default function Home() {
             <div className="space-y-6">
               <div className="space-y-4">
                 <h1 className="font-display text-5xl lg:text-6xl leading-tight">
-                  Sites Profissionais para
-                  <span className="text-accent">Gerar Mais Clientes</span>
+                  Soluções Digitais para
+                  <span className="text-accent">Fazer a Sua Empresa Crescer</span>
                 </h1>
                 <p className="text-lg text-muted-foreground">
-                  Criamos sites profissionais, rápidos e otimizados para
-                  converter visitantes em clientes. Soluções modernas e estratégicas para empresas que querem crescer com presença digital forte.
+                  Criamos sites profissionais, sistemas web, automações e apps
+                  sob medida para transformar ideias em resultados.
+                  Desenvolvemos soluções modernas e estratégicas para empresas
+                  que querem crescer com presença digital forte.
                 </p>
               </div>
               <div className="flex flex-col sm:flex-row gap-4 pt-4">

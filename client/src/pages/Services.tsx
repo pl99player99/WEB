@@ -150,11 +150,11 @@ export default function Services() {
       <section className="pt-32 pb-16">
         <div className="container text-center">
           <h1 className="font-display text-5xl mb-4">
-            Nossos Pacotes de Serviços
+            Soluções Digitais para Empresas
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Escolha o pacote ideal para seu negócio ou solicite uma solução
-            personalizada
+            Mantivemos os pacotes de sites e adicionamos novas linhas de soluções
+            digitais para projetos sob medida, sistemas e apps.
           </p>
         </div>
       </section>
@@ -260,6 +260,82 @@ export default function Services() {
         </div>
       </section>
 
+      {/* Additional Digital Solutions */}
+      <section className="py-20 border-t border-border">
+        <div className="container">
+          <div className="text-center mb-12">
+            <h2 className="font-display text-4xl mb-4">Outras Soluções Digitais</h2>
+            <p className="text-muted-foreground max-w-3xl mx-auto">
+              Além dos pacotes de sites, também entregamos projetos técnicos para
+              digitalizar operações, criar produtos digitais e escalar empresas.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              {
+                title: "Sistemas Web por Encomenda",
+                description:
+                  "Desenvolvimento de sistemas internos, portais de clientes, áreas administrativas e fluxos sob medida.",
+                examples: ["Gestão de pedidos", "Dashboard interno", "Portal de clientes"],
+              },
+              {
+                title: "Aplicativos Mobile",
+                description:
+                  "Apps para Android e iOS focados em operação, vendas, atendimento e experiência do cliente.",
+                examples: ["App de agendamento", "App de equipa", "App para clientes"],
+              },
+              {
+                title: "Bases de Dados e Backoffice",
+                description:
+                  "Estruturação de base de dados, organização de informação, painéis e processos para tomada de decisão.",
+                examples: ["Modelagem de dados", "Relatórios", "Painéis de gestão"],
+              },
+              {
+                title: "Automação e Integrações",
+                description:
+                  "Integração entre ferramentas e automação de tarefas repetitivas para ganhar tempo e reduzir erros.",
+                examples: ["WhatsApp + CRM", "Email + Formulários", "Fluxos automáticos"],
+              },
+            ].map((solution, idx) => (
+              <Card key={idx} className="card-modern h-full">
+                <h3 className="font-display text-xl mb-3">{solution.title}</h3>
+                <p className="text-sm text-muted-foreground mb-4">
+                  {solution.description}
+                </p>
+                <ul className="space-y-2">
+                  {solution.examples.map((example, exIdx) => (
+                    <li key={exIdx} className="flex gap-2 text-sm">
+                      <Check className="w-4 h-4 text-accent flex-shrink-0 mt-0.5" />
+                      <span>{example}</span>
+                    </li>
+                  ))}
+                </ul>
+                <div className="mt-6 grid grid-cols-1 gap-3">
+                  <a
+                    href={`https://wa.me/${whatsappPhone.replace(/\D/g, "")}?text=${encodeURIComponent(
+                      `Olá! Tenho interesse em ${solution.title}. Quero receber mais detalhes.`
+                    )}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Button className="btn-primary w-full gap-2">
+                      Falar no WhatsApp <ArrowRight className="w-4 h-4" />
+                    </Button>
+                  </a>
+                  <Link href="/quote?package=personalizado">
+                    <Button variant="outline" className="w-full gap-2">
+                      Pedir proposta por Email <ArrowRight className="w-4 h-4" />
+                    </Button>
+                  </Link>
+                </div>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+
       {/* Detailed Comparison */}
       <section className="py-20 bg-card/30 border-y border-border">
         <div className="container">
@@ -360,7 +436,7 @@ export default function Services() {
             {[
               {
                 q: "Qual é o melhor pacote para meu negócio?",
-                a: "Depende de seus objetivos. Se quer apenas estar online, escolha Presença Online. Se quer parecer profissional, escolha Negócio Profissional. Se quer gerar vendas, escolha Vendas & Captação. Dúvidas? Contacte-nos!",
+                a: "Depende de seus objetivos. Se quer apenas estar online, escolha Presença Online. Se quer parecer profissional, escolha Negócio Profissional. Se quer gerar vendas, escolha Vendas & Captação. Para sistemas, apps e automações, fale connosco para proposta personalizada!",
               },
               {
                 q: "Posso fazer alterações após a entrega?",
@@ -368,7 +444,7 @@ export default function Services() {
               },
               {
                 q: "E se precisar de algo diferente?",
-                a: "Temos o pacote Personalizado! Você descreve o que precisa, nós analisamos e criamos uma solução customizada com orçamento fechado.",
+                a: "Temos o pacote Personalizado! Você descreve o que precisa, nós analisamos e criamos uma solução customizada — seja site, sistema web, app mobile ou automação.",
               },
               {
                 q: "Como funciona o pagamento?",
@@ -393,8 +469,8 @@ export default function Services() {
         <div className="container text-center">
           <h2 className="font-display text-4xl mb-6">Pronto para Começar?</h2>
           <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Escolha seu pacote ou solicite uma solução personalizada. Estamos
-            prontos para transformar sua presença digital!
+            Escolha um pacote de site ou solicite uma solução personalizada para
+            sistemas, apps, automações e projetos digitais sob medida!
           </p>
           <Link href="/contact">
             <Button className="btn-primary gap-2 text-lg px-8 py-6">
