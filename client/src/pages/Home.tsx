@@ -23,10 +23,20 @@ export default function Home() {
 
       {/* Hero Section */}
       <section className="pt-32 pb-20 relative overflow-hidden">
-        <div className="container">
+        <div className="absolute inset-0 lg:hidden">
+          <img
+            src="/images/home-hero.png"
+            alt=""
+            aria-hidden="true"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-background/90 via-background/80 to-background" />
+        </div>
+
+        <div className="container relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Left Content */}
-            <div className="space-y-6">
+            <div className="space-y-6 bg-background/65 backdrop-blur-sm p-6 rounded-2xl border border-border/50 lg:bg-transparent lg:backdrop-blur-0 lg:p-0 lg:border-0">
               <div className="space-y-4">
                 <h1 className="font-display text-5xl lg:text-6xl leading-tight">
                   Soluções Digitais para
