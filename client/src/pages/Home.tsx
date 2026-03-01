@@ -58,7 +58,7 @@ export default function Home() {
             <div className="hidden lg:flex justify-center items-center">
               <div className="w-full max-w-xl relative rounded-2xl overflow-hidden border border-accent/30">
                 <img
-                  src="/images/home-hero.svg"
+                  src="/images/home-hero.png"
                   alt="Equipa colaborando no desenvolvimento de um projeto digital"
                   className="w-full h-80 object-cover"
                 />
@@ -109,17 +109,17 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
               {
-                image: "/images/home-proof-1.svg",
+                image: "/images/home-proof-1.png",
                 title: "Reuniões Estratégicas",
                 text: "Planeamento com foco em metas reais do negócio.",
               },
               {
-                image: "/images/home-proof-2.svg",
+                image: "/images/home-proof-2.png",
                 title: "Design e Conversão",
                 text: "Layouts modernos pensados para vender e gerar contactos.",
               },
               {
-                image: "/images/home-proof-3.svg",
+                image: "/images/home-proof-3.png",
                 title: "Resultados Medíveis",
                 text: "Projetos com acompanhamento de desempenho e melhoria contínua.",
               },
@@ -351,21 +351,21 @@ export default function Home() {
                 title: "Restaurante Sabor da Terra",
                 category: "Negócio Profissional",
                 image:
-                  "/images/project-1.svg",
+                  "/images/project-1.png",
               },
               {
                 id: 2,
                 title: "Consultoria JM - Landing Page",
                 category: "Vendas & Captação",
                 image:
-                  "/images/project-2.svg",
+                  "/images/project-2.png",
               },
               {
                 id: 3,
                 title: "Salão de Beleza Estilo",
                 category: "Presença Online",
                 image:
-                  "/images/project-3.svg",
+                  "/images/project-3.png",
               },
             ].map((project, idx) => (
               <Link key={idx} href={`/portfolio?project=${project.id}`}>
