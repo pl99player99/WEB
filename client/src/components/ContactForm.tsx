@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+import { getApiErrorMessage } from "@/lib/api";
 
 interface FormData {
   name: string;
@@ -50,11 +51,10 @@ export default function ContactForm() {
         body: JSON.stringify(formData),
       });
 
-      const result = await response.json().catch(() => null);
-
       if (!response.ok) {
-        const apiError = result?.error || "Erro ao enviar mensagem.";
-        throw new Error(apiError);
+        throw new Error(
+          await getApiErrorMessage(response, "Erro ao enviar mensagem")
+        );
       }
 
       toast.success(
