@@ -45,6 +45,8 @@ function App() {
           <Toaster />
           <Router />
           <WhatsAppButton />
+          <SpeedInsights />
+          <Analytics />
         </TooltipProvider>
       </ThemeProvider>
     </ErrorBoundary>
