@@ -18,7 +18,7 @@ export default function Blog() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   const filteredArticles = selectedCategory
-    ? blogArticles.filter((article) => article.category === selectedCategory)
+    ? blogArticles.filter(article => article.category === selectedCategory)
     : blogArticles;
 
   return (
@@ -34,7 +34,8 @@ export default function Blog() {
               Blog <span className="text-accent">DDA-Web</span>
             </h1>
             <p className="text-lg text-muted-foreground mb-8">
-              Artigos, dicas e insights sobre web design, marketing digital e tecnologia. Fique atualizado com as últimas tendências do mercado.
+              Artigos, dicas e insights sobre web design, marketing digital e
+              tecnologia. Fique atualizado com as últimas tendências do mercado.
             </p>
           </div>
         </div>
@@ -51,13 +52,11 @@ export default function Blog() {
             >
               Todos
             </Button>
-            {categories.map((category) => (
+            {categories.map(category => (
               <Button
                 key={category}
                 onClick={() => setSelectedCategory(category)}
-                variant={
-                  selectedCategory === category ? "default" : "outline"
-                }
+                variant={selectedCategory === category ? "default" : "outline"}
                 className="transition-all"
               >
                 {category}
@@ -71,7 +70,7 @@ export default function Blog() {
       <section className="py-20">
         <div className="container">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredArticles.map((article) => (
+            {filteredArticles.map(article => (
               <Link key={article.id} href={`/blog/${article.id}`}>
                 <Card className="h-full cursor-pointer hover:border-accent transition-all hover:shadow-lg group overflow-hidden">
                   <div className="p-6 flex flex-col h-full">
@@ -82,8 +81,14 @@ export default function Blog() {
                       </span>
                     </div>
 
-                    {/* Icon */}
-                    <div className="text-5xl mb-4">{article.image}</div>
+                    <div className="relative h-40 mb-4 overflow-hidden rounded-lg border border-border">
+                      <img
+                        src={article.image}
+                        alt={article.imageAlt}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent" />
+                    </div>
 
                     {/* Title */}
                     <h3 className="font-display text-xl mb-3 group-hover:text-accent transition">
@@ -99,7 +104,7 @@ export default function Blog() {
                     <div className="flex items-center gap-4 text-xs text-muted-foreground border-t border-border pt-4">
                       <div className="flex items-center gap-1">
                         <Calendar className="w-4 h-4" />
-                        {new Date(article.date).toLocaleDateString("pt-BR")}
+                        {new Date(article.date).toLocaleDateString("pt-PT")}
                       </div>
                       <div className="flex items-center gap-1">
                         <Clock className="w-4 h-4" />
@@ -130,22 +135,19 @@ export default function Blog() {
       {/* CTA Section */}
       <section className="py-20 bg-card/30 border-t border-border">
         <div className="container max-w-2xl text-center">
-          <h2 className="font-display text-4xl mb-4">
-            Quer Aprender Mais?
-          </h2>
+          <h2 className="font-display text-4xl mb-4">Quer Aprender Mais?</h2>
           <p className="text-muted-foreground mb-8">
-            Inscreva-se em nossa newsletter para receber os últimos artigos e dicas diretamente na sua caixa de entrada.
+            Inscreva-se em nossa newsletter para receber os últimos artigos e
+            dicas diretamente na sua caixa de entrada.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/#contact">
+            <Link href="/contact">
               <Button className="btn-primary gap-2">
                 Entre em Contacto <ArrowRight className="w-4 h-4" />
               </Button>
             </Link>
             <Link href="/quote">
-              <Button variant="outline">
-                Solicitar Orçamento
-              </Button>
+              <Button variant="outline">Solicitar Orçamento</Button>
             </Link>
           </div>
         </div>
@@ -155,7 +157,9 @@ export default function Blog() {
       <footer className="py-12 border-t border-border text-center text-muted-foreground text-sm">
         <div className="container">
           <p>&copy; 2025 DDA-Web. Todos os direitos reservados.</p>
-          <p className="mt-2">Transformando negócios com tecnologia e inovação.</p>
+          <p className="mt-2">
+            Transformando negócios com tecnologia e inovação.
+          </p>
         </div>
       </footer>
     </div>
