@@ -2,6 +2,7 @@ import express from "express";
 import { createServer } from "http";
 import path from "path";
 import { fileURLToPath } from "url";
+import { handleContactRequest } from "./contactEmail";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -69,65 +70,8 @@ async function startServer() {
   app.use(express.json());
 
   app.post("/api/contact", async (req, res) => {
-    const body: ContactRequestBody = req.body ?? {};
-
-    if (!body.name || !body.email || !body.message) {
-      res.status(400).json({
-        success: false,
-        error: "Campos obrigatórios ausentes: nome, email e mensagem.",
-      });
-      return;
-    }
-
-    try {
-      const serviceId = getRequiredEnv("EMAILJS_SERVICE_ID");
-      const templateIdAdmin = getRequiredEnv("EMAILJS_TEMPLATE_ID_ADMIN");
-      const publicKey = getRequiredEnv("EMAILJS_PUBLIC_KEY");
-      const privateKey = getOptionalEnv("EMAILJS_PRIVATE_KEY");
-      const templateIdClient = getOptionalEnv("EMAILJS_TEMPLATE_ID_CLIENT");
-
-      const templateParams = {
-        from_name: body.name,
-        from_email: body.email,
-        phone: body.phone || "Não fornecido",
-        company: body.company || "Não fornecido",
-        message: body.message,
-      };
-
-      await sendEmail({
-        serviceId,
-        templateId: templateIdAdmin,
-        publicKey,
-        privateKey,
-        templateParams,
-      });
-
-      let confirmationSent = false;
-      if (templateIdClient) {
-        try {
-          await sendEmail({
-            serviceId,
-            templateId: templateIdClient,
-            publicKey,
-            privateKey,
-            templateParams,
-          });
-          confirmationSent = true;
-        } catch (error) {
-          console.error("Failed to send confirmation email:", error);
-        }
-      }
-
-      res.json({ success: true, confirmationSent });
-    } catch (error) {
-      const errorMessage =
-        error instanceof Error ? error.message : "Erro ao enviar mensagem.";
-      console.error("Failed to send contact emails:", error);
-      res.status(500).json({
-        success: false,
-        error: errorMessage,
-      });
-    }
+    const result = await handleContactRequest(req.body ?? {});
+    res.status(result.status).json(result.body);
   });
 
   // Serve static files from dist/public in production
